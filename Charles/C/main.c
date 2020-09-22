@@ -1,15 +1,20 @@
+#define _GNU_SOURCE
 #include "automata.h"
 #include "util.h"
 
 int main(int argc, char** argv) {
+	char* s1;
+	char* s2;
+	asprintf(&s1, "%s", "a");
+	asprintf(&s2, "%s", "xyz");
 	
 	AutomataNode* start = AutomataNewNode(false);
 	AutomataNode* n1 = AutomataNewNode(false);
 	AutomataNode* n2 = AutomataNewNode(false);
 	AutomataNode* n3 = AutomataNewNode(false);
 	AutomataNode* end = AutomataNewNode(true);
-	AutomataLink* matchA = AutomataNewClassMatcher("a", 1);
-	AutomataLink* matchXYZ = AutomataNewClassMatcher("xyz", 3);
+	AutomataLink* matchA = AutomataNewClassMatcher(s1, 1);
+	AutomataLink* matchXYZ = AutomataNewClassMatcher(s2, 3);
 	AutomataLink* matchEpsilon = AutomataNewEpsilonMatcher();
 	AutomataLink* matchEpsilon2 = AutomataNewEpsilonMatcher();
 	AutomataLink* matchP = AutomataNewPalindromeMatcher();
@@ -23,4 +28,5 @@ int main(int argc, char** argv) {
 
 	AutomataDumpGraphviz(start, stdout);
 
+	AutomataFreeNode(start);
 }
