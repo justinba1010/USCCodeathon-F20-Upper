@@ -93,6 +93,9 @@ bool AutomataPalindromeMatch(struct AutomataLink_t* link, char symbol);
 // unconditionally.
 bool AutomataEpsilonMatch(struct AutomataLink_t* link, char symbol);
 
+// AutomataLinkNodes attaches an already created link object to the given nodes.
+void AutomataLinkNodes(struct AutomataLink_t* link, struct AutomataNode_t* from, struct AutomataNode_t* to);
+
 // AutomataNewNode instantiates a new node object. If accepting is asserted,
 // then the node will be considered an accepting state.
 AutomataNode* AutomataNewNode(bool accepting);
@@ -102,5 +105,31 @@ AutomataNode* AutomataNewNode(bool accepting);
 // links.
 void AutomataFreeNode(struct AutomataNode_t* node);
 
+// AutomataNextState advances the automata by one state, given the specified
+// symbol. The specified node is assumed to be the start state, which is always
+// active. The return value will be true if any accepting state became active.
+bool AutomataNextState(struct AutomataNode_t* node, char symbol);
+
+// AutomataCollectConnected returns a newly allocated list of all nodes
+// reachable from the given starting node, including the starting node.
+void AutomataCollectConnected(struct AutomataNode_t* node, unsigned int* count, struct AutomataNode_t*** results);
+
+// AutomataDumpGraphviz displays all nodes reachable from the specified node
+// in GraphViz markup. 
+void AutomataDumpGraphviz(struct AutomataNode_t* node, FILE* fd);
+
+// AutomataTraverseConnected runs the given statement _code for each
+// node that is reachable from _node. _nodevar will contain the current
+// node being visited.
+#define AutomataTraverseConnected(_node, _nodevar, _code) \
+	do { \
+		AutomataNode** _nodes; \
+		unsigned int _count; \
+		AutomataCollectConnected(node, &_count, &_nodes); \
+		for (unsigned int i = 0 ; i < _count ; i++) { \
+			_nodevar = _nodes[i]; \
+			do { _code; } while(0); \
+		} \
+	} while(0) \
 
 #endif

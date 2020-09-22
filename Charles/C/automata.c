@@ -23,7 +23,7 @@ AutomataLink* AutomataNewClassMatcher(char* class, size_t nclass) {
 
 AutomataLink* AutomataNewPalindromeMatcher() {
 	AutomataLink* l = AutomataNewEpsilonMatcher();
-	l->Type = AUTOMATA_MATCHER_CLASS;
+	l->Type = AUTOMATA_MATCHER_PALINDROME;
 	l->Text = MustMalloc(sizeof(char));
 	l->Text[0] = 0;
 	l->NText = 0;
@@ -86,7 +86,7 @@ AutomataNode* AutomataNewNode(bool accepting) {
 	n->Active = false;
 	n->Accepting = accepting;
 	n->Links = NULL;
-	dbprintf("created new %s node %p", (accepting) ? "accepting" : "non-accepting", (void*) n);
+	dbprintf("created new %s node %p\n", (accepting) ? "accepting" : "non-accepting", (void*) n);
 	return n;
 }
 
@@ -97,4 +97,101 @@ void AutomataFreeNode(struct AutomataNode_t* node) {
 		AutomataFreeLink(node->Links); // handles list traversal automatically
 	}
 	free(node);
+}
+
+bool AutomataNextState(struct AutomataNode_t* node, char symbol) {
+	return false;
+}
+
+// Internal logic for traversing the automata, cursor should be 0 initially,
+// and is used by recursive calls to track the next unused index in the results
+// array.
+//
+// This function assumes that the node in the argument list has already been
+// added to the list, and only traverses linked nodes.
+static void _automataCollectConnected(struct AutomataNode_t* node, unsigned int* count, struct AutomataNode_t*** results, int* cursor) {
+
+	// count the links
+	int nLinks = 0;
+	for (AutomataLink* l = node->Links ; l != NULL ; l = l->next) {
+		if (l->Target != NULL) { nLinks ++; }
+	}
+
+	// if there are no outgoing links, we can return early
+	if (nLinks == 0) { return; }
+
+	// expand the results array
+	*count += nLinks;
+	*results = realloc(*results, *count*sizeof(AutomataNode*));
+	if (*results == NULL) {
+		err(1, "failed to expand results array");
+	}
+
+	// populate results
+	for (AutomataLink* l = node->Links ; l != NULL ; l = l->next) {
+		if (l->Target != NULL) {
+			(*results)[*cursor] = l->Target;
+			(*cursor)++;
+		}
+	}
+
+	// descend
+	for (AutomataLink* l = node->Links ; l != NULL ; l = l->next) {
+		_automataCollectConnected(l->Target, count, results, cursor);
+	}
+}
+
+void AutomataCollectConnected(struct AutomataNode_t* node, unsigned int* count, struct AutomataNode_t*** results) {
+	*results = MustMalloc(sizeof(AutomataNode**));
+	*count = 1;
+	*results[0] = node;
+	int cursor = 1;
+	_automataCollectConnected(node, count, results, &cursor);
+}
+
+void AutomataLinkNodes(struct AutomataLink_t* link, struct AutomataNode_t* from, struct AutomataNode_t* to) {
+
+	// insert the link into the origin node
+	if (from->Links == NULL) {
+		from->Links = link;
+	} else {
+		for (AutomataLink* l = from->Links ; l != NULL ; l = l->next) {
+			if (l->next == NULL) {
+				l->next = link;
+				break;
+			}
+		}
+	}
+
+	link->Target = to;
+}
+
+void AutomataDumpGraphviz(struct AutomataNode_t* node, FILE* fd) {
+	AutomataNode* cursor;
+	fprintf(fd, "digraph G {\n");
+	int num = 0;
+	AutomataTraverseConnected(node, cursor,
+		fprintf(fd, "    \"%p\" [label=\"%d\" shape=\"%s\" color=\"%s\"]\n",
+			(void*) cursor, num,
+			(cursor->Accepting) ? "doublecircle" : "circle",
+			(cursor->Active) ? "red" : "black");
+		num++;
+	);
+
+	AutomataTraverseConnected(node, cursor,
+		for (AutomataLink* l = cursor->Links ; l != NULL ; l = l->next) {
+			if (l->Type == AUTOMATA_MATCHER_EPSILON) {
+				fprintf(fd, "    \"%p\" -> \"%p\" [ label = epsilon ]\n",
+					(void*) cursor, (void*) l->Target);
+			} else if (l->Type == AUTOMATA_MATCHER_CLASS) {
+				fprintf(fd, "    \"%p\" -> \"%p\" [ label = \"class '%s'\" ]\n",
+					(void*) cursor, (void*) l->Target, l->Text);
+			} else if (l->Type == AUTOMATA_MATCHER_PALINDROME) {
+				fprintf(fd, "    \"%p\" -> \"%p\" [ label = palindrome ]\n",
+					(void*) cursor, (void*) l->Target);
+			}
+		}
+	);
+
+	fprintf(fd, "}\n");
 }
