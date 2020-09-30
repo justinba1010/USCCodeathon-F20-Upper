@@ -42,6 +42,13 @@ def FourierTransform(n, m):
     #  return Fours
 
 
+first = True
 for line in sys.stdin:
+
+    # skip over the line with k
+    if first:
+        first = False
+        continue
+
     n, m = [int(f) for f in line.split()]
     print(FourierTransform(n, m))
