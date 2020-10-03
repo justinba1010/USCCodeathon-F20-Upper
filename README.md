@@ -1,8 +1,9 @@
 # USCCodeathon-S20-Upper
 
-```
 * To add a defined test case, just use `git add -f input/sampleinput`.
 * Try to follow the style listed below, however, any style is fine.
+
+```
 myProblem
 ├── input
 │   ├── input0.txt
