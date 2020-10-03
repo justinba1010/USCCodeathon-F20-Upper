@@ -2,7 +2,7 @@
 
 cd "$(dirname "$0")"
 
-NUM=2
+NUM=3
 STOPNUM=50
 
 while true ; do

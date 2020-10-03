@@ -31,6 +31,7 @@ def FourierTransform(n, m):
     # possibly be any fourier than m, since they will count fours across
     # smaller sets
     return FoursInRangeOptimal(m)
+    #return FoursInRangeNaive(m)
 
     #  Fours = FoursInRangeOptimal(n)
     #  i = n
