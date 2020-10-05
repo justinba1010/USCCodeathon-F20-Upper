@@ -1,3 +1,9 @@
 **/input/*
 **/output*/*
 *.zip
+*.swp
+pineapple-piping/*.png
+pineapple-piping/*.dot
+pineapple-piping/gen
+pineapple-piping/sol
+
