@@ -23,7 +23,7 @@ d_sol: sol.c sol.h
 dot: $(GVIZ)
 
 %.png: %.dot
-	dot -Tpng $^ > $@
+	dot -Tsvg $^ > $@
 
 clean:
-	rm -f *.dot *.png gen sol
+	rm -f *.dot *.png *.svg gen sol

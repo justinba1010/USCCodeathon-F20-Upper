@@ -4,6 +4,7 @@
 *.swp
 pineapple-piping/*.png
 pineapple-piping/*.dot
+pineapple-piping/*.svg
 pineapple-piping/gen
 pineapple-piping/sol
 

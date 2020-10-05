@@ -17,7 +17,7 @@ void vis_wul_graph(const char* s, wul_graph* g) {
 			if (i < curr->neighbor)
 #endif
 			{
-				fprintf(fptr, "\t%u -- %u[label=\" %u\"];\n", i,
+				fprintf(fptr, "\t%u -- %u[label=\"  %u\"];\n", i,
 						curr->neighbor, curr->weight);
 			}
 			curr = (w_node*) curr->next;
