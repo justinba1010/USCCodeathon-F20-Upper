@@ -7,7 +7,7 @@ STANDARD_FLAGS=-Og
 
 .PHONY: release debug all dot svg
 
-release  debug all: gen.c pinepipe.c pinepipe.h
+release debug all: gen.c pinepipe.c pinepipe.h
 	make -f $@.mk CC="$(CC)" CFLAGS="$(CFLAGS)" \
 	RELEASE_FLAGS="$(RELEASE_FLAGS)" DEBUG_FLAGS="$(DEBUG_FLAGS)" \
 	STANDARD_FLAGS="$(STANDARD_FLAGS)"
@@ -19,4 +19,4 @@ dot: $(GVIZ)
 	dot -Tsvg $^ > $@
 
 clean:
-	rm -f *.dot *.png *.svg gen sol
+	rm -f *.dot *.svg gen sol

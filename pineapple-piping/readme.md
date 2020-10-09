@@ -1,10 +1,20 @@
-To generate solutions
-run ./create
+## Generating solutions
 
+Run ./create_test.sh
 
-The makefile builds both the solution and generator in c
+## Building
 
-hackerrank.md contains the problem statement for hackerrank
-input contains inpute files
-output contains output files
+Run make for release mode.
+modes:
+	* release (default)
+	* debug
+	* all - for general editing and compiling
+
+## hackerRank.md
+
+Contains the problem statement for HackerRank
+
+## hackerRank.c
+
+A single file solution appropriate for uploading to HackerRank
 
