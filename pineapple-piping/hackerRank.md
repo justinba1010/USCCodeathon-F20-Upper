@@ -12,7 +12,8 @@ Kenny has some pineapples he needs to send from a source station, $s$, to a
 target station, $t$, in a collection of pipes with $n$ intersections. He will
 use only one route of pipes to accomplish this, but the pineapples can travel
 either way along a given pipe. A pineapple has a width of 1, and so $m$
-pineapples can fit in an $m$-wide pipe.
+pineapples can fit in an $m$-wide pipe. Find the maximum number of pineapples
+Kenny can send from $s$ to $t$ using only one route of pipes.
 
 ### Input Format
 
@@ -58,8 +59,10 @@ All intersections have at least two pipes attached.
 $p$
 
 Where $p$ is the maximum amount of pineapples Kenny can send at once, using
-only one path.
+only one route.
 
 ### Tags
+
+Routing
 
 

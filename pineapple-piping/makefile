@@ -7,32 +7,10 @@ STANDARD_FLAGS=-Og
 
 .PHONY: release debug all dot svg
 
-release: r_gen r_sol
-
-debug: d_gen d_sol
-
-all: gen sol
-
-#release
-r_gen: gen.c pinepipe.c pinepipe.h
-	$(CC) $(CFLAGS) $(RELEASE_FLAGS) -o gen gen.c pinepipe.c
-
-r_sol: sol.c pinepipe.c pinepipe.h
-	$(CC) $(CFLAGS) $(RELEASE_FLAGS) -o sol sol.c pinepipe.c
-
-#debug
-d_gen: gen.c pinepipe.c pinepipe.h
-	$(CC) $(CFLAGS) $(DEBUG_FLAGS) -o gen gen.c pinepipe.c
-
-d_sol: sol.c pinepipe.c pinepipe.h
-	$(CC) $(CFLAGS) $(DEBUG_FLAGS) -o sol sol.c pinepipe.c
-
-#all
-gen: gen.c pinepipe.c pinepipe.h
-	$(CC) $(CFLAGS) $(STANDARD_FLAGS) -o gen gen.c pinepipe.c
-
-sol: sol.c pinepipe.c pinepipe.h
-	$(CC) $(CFLAGS) $(STANDARD_FLAGS) -o sol sol.c pinepipe.c
+release  debug all: gen.c pinepipe.c pinepipe.h
+	make -f $@.mk CC="$(CC)" CFLAGS="$(CFLAGS)" \
+	RELEASE_FLAGS="$(RELEASE_FLAGS)" DEBUG_FLAGS="$(DEBUG_FLAGS)" \
+	STANDARD_FLAGS="$(STANDARD_FLAGS)"
 
 #visualization
 dot: $(GVIZ)
