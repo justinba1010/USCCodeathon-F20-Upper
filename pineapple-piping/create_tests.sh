@@ -19,6 +19,7 @@ H_SIZE=10000
 S_DEG=5
 M_DEG=50
 L_DEG=100
+H_DEG=1000
 
 CURR_FILE=0
 PAD=2
@@ -46,26 +47,24 @@ gen 8 3
 
 gen "$S_SIZE" "$S_DEG"
 gen "$S_SIZE" "$S_DEG"
-gen "$S_SIZE" "$S_DEG"
 
-gen "$M_SIZE" "$S_DEG"
 gen "$M_SIZE" "$S_DEG"
 gen "$M_SIZE" "$S_DEG"
 
 gen "$M_SIZE" "$M_DEG"
 gen "$M_SIZE" "$M_DEG"
-gen "$M_SIZE" "$M_DEG"
 
 gen "$L_SIZE" "$S_DEG"
 gen "$L_SIZE" "$S_DEG"
-gen "$L_SIZE" "$S_DEG"
 
-gen "$L_SIZE" "$M_DEG"
 gen "$L_SIZE" "$M_DEG"
 gen "$L_SIZE" "$M_DEG"
 
 gen "$L_SIZE" "$L_DEG"
+gen "$L_SIZE" "$L_DEG"
 
 gen "$H_SIZE" "$S_DEG"
-
 gen "$H_SIZE" "$L_DEG"
+
+gen "$(( H_SIZE / 2 ))" "$H_DEG"
+gen "$H_SIZE" "$(( H_DEG / 2 ))"
