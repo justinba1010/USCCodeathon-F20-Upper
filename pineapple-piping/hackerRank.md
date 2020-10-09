@@ -40,6 +40,8 @@ the pipe between these intersections. This applies for every pair on the line.
 Each line corresponds to an intersection. The line-number intersection-number
 relationship is: line = intersection + 2.
 
+See the samples below for examples.
+
 ### Constraints
 
 $s \ne t$
@@ -65,4 +67,14 @@ only one route.
 
 Routing
 
+
+### Explanation 0
+
+See that there is no route between $s=0$ and $t=1$ that has a wider minimum
+width.
+
+### Explanation 1
+
+See that there is no route between $s=1$ and $t=2$ that has a wider minimum
+width.
 
