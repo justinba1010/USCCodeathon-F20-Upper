@@ -1,19 +1,17 @@
 #!/bin/bash
 
 # generate test cases for hackerrank
+set -ue
 
-cd $(dirname $0)
+cd "$(dirname "$0")" || exit 1
 
 mkdir -p input
 mkdir -p output
 
-make all
+make release
 
-
-
-# MUST SEED RANDOM FOR REPRODUCABILITY
-
-
+# must seed random for reproducability
+export RANDOM=4 #RFC 1149.5
 S_SIZE=10
 M_SIZE=100
 L_SIZE=1000
@@ -24,29 +22,61 @@ L_DEG=100
 
 #1 eg 1
 #1 eg 2
-#5 small,sd
-#5 med, sd
-#5 med, md
-#5 lar, sd
-#5 lar, md
+#3 small,sd
+#3 med, sd
+#3 med, md
+#3 lar, sd
+#3 lar, md
 #1 lar, ld
 #1 hug, sd
 #1 hug, ld
 
+CURR_FILE=0
+PAD=2
+IFILE_PRE="./input/input"
+OFILE_PRE="./output/output"
+gen() {
+	SIZE=$1
+	DEG=$2
 
+	S=$(("$RANDOM" % SIZE))
+	T=$(("$RANDOM" % SIZE))
+	while [ $S -eq $T ] ; do
+		T=$(("$RANDOM" % SIZE))
+	done
 
-PAD='2'
+	NUM=$(printf "%0*d" "$PAD" "$CURR_FILE")
+	CURR_FILE=$((CURR_FILE + 1))
 
+	./gen "$SIZE" "$DEG" "$S" "$T" > "$IFILE_PRE""$NUM".txt
+	./sol > "$OFILE_PRE""$NUM".txt < "$IFILE_PRE""$NUM".txt
+}
 
+gen 6 3
+gen 8 2
 
-for n in $(seq 3 24) ; do
-	num=$(printf "%0*d" "$PAD" "$n")
-	INPUT_FILE="./input/input$num.txt"
-	OUTPUT_FILE="./output/output$num.txt"
+gen "$S_SIZE" "$S_DEG"
+gen "$S_SIZE" "$S_DEG"
+gen "$S_SIZE" "$S_DEG"
 
-	./gen > "$INPUT_FILE"
-	cat "$INPUT_FILE" | ./sol > "$OUTPUT_FILE"
-done
+gen "$M_SIZE" "$S_DEG"
+gen "$M_SIZE" "$S_DEG"
+gen "$M_SIZE" "$S_DEG"
 
+gen "$M_SIZE" "$M_DEG"
+gen "$M_SIZE" "$M_DEG"
+gen "$M_SIZE" "$M_DEG"
 
-gen(size, degree source, target)
+gen "$L_SIZE" "$S_DEG"
+gen "$L_SIZE" "$S_DEG"
+gen "$L_SIZE" "$S_DEG"
+
+gen "$L_SIZE" "$M_DEG"
+gen "$L_SIZE" "$M_DEG"
+gen "$L_SIZE" "$M_DEG"
+
+gen "$L_SIZE" "$L_DEG"
+
+gen "$H_SIZE" "$S_DEG"
+
+gen "$H_SIZE" "$L_DEG"
