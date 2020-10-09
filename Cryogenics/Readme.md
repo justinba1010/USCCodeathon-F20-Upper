@@ -1,5 +1,9 @@
 # Carl's Cryogenics Corporation Calculator
 
+slug: `carl-cryo-corp-calc`
+
+Help Carl Calculate the number of people in the Cryogenic chambers.
+
 ## Author Notes
 
 This is a problem heavily inspired by one from Cracking the Coding Interview, `16.10 - Living People`. I liked this problem because there is a trick to colving it in linear time
