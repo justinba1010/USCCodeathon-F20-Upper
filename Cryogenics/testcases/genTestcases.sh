@@ -4,7 +4,10 @@ RUN_PROG=../sol/python/main.py
 
 echo "Generating..."
 
-for i in $(seq 0 30); do
+mkdir -p input
+mkdir -p output
+
+for i in $(seq 0 20); do
 
     echo "Input $i"
     if [ $i -lt 10 ]; then
@@ -21,3 +24,7 @@ for i in $(seq 0 30); do
     echo "Output $i"
     cat input/input$i.txt | python3 $RUN_PROG > output/output$i.txt
 done
+
+echo "Creating Zip File..."
+
+zip testcases.zip input/* output/*
