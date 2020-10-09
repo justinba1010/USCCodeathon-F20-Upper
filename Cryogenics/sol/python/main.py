@@ -9,9 +9,10 @@ births = []
 deaths = []
 
 for i in range(0,n):
-    a = int(input())
+    line = input().split(" ")
+    a = int(line[0])
     births.append(a)
-    b = int(input())
+    b = int(line[1])
     deaths.append(b)
 
 births.sort()
