@@ -24,19 +24,23 @@ alive = 0
 bdone = False
 ddone = False
 
-while bptr < len(births) and dptr < len(deaths) and not(bdone and ddone):
+while dptr < len(deaths) and not(ddone):
     # Process Births first
-    if not bdone and births[bptr] <= deaths[dptr]:
+    if not bdone and bptr < len(births) and births[bptr] <= deaths[dptr]:
         if births[bptr] <= year:
             alive += 1
+            # print("Alive", str(births[bptr]), str(alive))
             bptr += 1
         else:
+            # print("Births Done")
             bdone = True
     else:
         if deaths[dptr] < year:
             alive -= 1
+            # print("Death", str(deaths[dptr]), str(alive))
             dptr += 1
         else:
+            # print("Deaths Done")
             dptr = len(deaths) - 1
             ddone = True
 
