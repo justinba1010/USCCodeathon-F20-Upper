@@ -142,24 +142,10 @@ wul_graph deserialize_wul_graph(size_t s){
 			weight   = atoi(strtok(NULL, DELIMS));
 			token    = strtok(NULL, DELIMS);
 			add_neighbor(&g, parse_size, neighbor, weight);
-			//printf("%u|%u\t", neighbor, weight);
 		}
-		//printf("\n");
 		parse_size++;
 	}
 
-//	while((getline(&line, &len, stdin)) != -1){
-//		curr = line;
-//		scan_len = 0;
-//		//printf("%zu\t%s", parse_size, line);
-//		while(scan_len != -1){
-//			scan_len = sscanf(curr, "%u:%u", &neighbor, &weight);
-//			//g.vertices[parse_size];
-//			curr += scan_len+1;
-//			printf("%u|%u\n", neighbor, weight);
-//		}
-//		parse_size++;
-//	}
 	if(s != parse_size){
 		fprintf(stderr, "ERROR: Parsed size and given size differ\n");
 		exit(EXIT_FAILURE);
