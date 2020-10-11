@@ -1,0 +1,14 @@
+graph {
+	0 [penwidth=3];
+	1 [penwidth=3];
+
+	0 -- 5[label="  23"];
+	0 -- 3[label="  493", penwidth=3, color="#FF0000"];
+	0 -- 1[label="  387"];
+	1 -- 4[label="  230"];
+	1 -- 3[label="  457", penwidth=3, color="#FF0000"];
+	1 -- 2[label="  28"];
+	2 -- 5[label="  363", penwidth=3];
+	3 -- 4[label="  650", penwidth=3];
+	4 -- 5[label="  422", penwidth=3];
+}
