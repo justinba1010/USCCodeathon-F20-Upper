@@ -21,6 +21,7 @@ dot: $(GVIZ)
 slides: slides.pdf
 
 slides.pdf: slides.md
+	#this is a hack but give me a break
 	dot kruskal00.dot.keep -Tpng > kruskal00.png
 	pandoc -t beamer -s $< -o $@
 
