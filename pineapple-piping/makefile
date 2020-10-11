@@ -1,5 +1,5 @@
 GVIZ=$(shell ls *.dot 2>/dev/null | while read -r f ; do echo "$$(basename $$f .dot).svg" ; done)
-CC=clang
+CC=gcc
 CFLAGS=-Wall -Wextra -Wpedantic -std=c99
 RELEASE_FLAGS=-O3 -march=native
 DEBUG_FALGS=-g3
