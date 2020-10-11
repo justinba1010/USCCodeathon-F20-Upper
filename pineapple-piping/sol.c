@@ -4,8 +4,7 @@
 int main(int argc, char** argv) {
 	//get first line
 	size_t size, s, t;
-	int read = scanf("%zu%zu%zu\n", &size, &s, &t);
-	assert(read == 3);
+	scanf("%zu%zu%zu\n", &size, &s, &t);
 	wul_graph g = deserialize_wul_graph(size);
 	printf("%u\n", mbp_ewd(&g, s, t));
 	if (argc > 1) {
